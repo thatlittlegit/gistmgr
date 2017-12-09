@@ -23,7 +23,7 @@ $0 remove <list> <url>
 $0 list <list>
 
 GistMGR is under the GPL 3 License."
-    exit 1
+    exit 3
 }
 
 [ -f ~/.gistmgrrc ] || genrcfile
@@ -42,7 +42,7 @@ else
 	then
 	    echo "$0: invalid number of arguments (got $#, need 2)" >&2
 	    echo "$0: Usage: $0 list <list>" >&2
-	    exit 1
+	    exit 3
 	fi
 
 	grep -e "^$2 " $FILE_LOC
