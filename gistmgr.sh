@@ -15,11 +15,8 @@ function genrcfile() {
     echo "FOLDER_LOC=$HOME/.gistmgr" >>~/.gistmgrrc
 }
 
-[ -f ~/.gistmgrrc ] || genrcfile
-
-if [ $# -eq 0 ] || [ "$1" == "--help" ] || [ "$1" == "-h" ] || [ -z "$1" ]
-then
-    echo "GistMGR - by thatlittlegit
+function usage() {
+       echo "GistMGR - by thatlittlegit
 
 $0 add <list> <url> [comment]
 $0 remove <list> <url>
@@ -27,6 +24,13 @@ $0 list <list>
 
 GistMGR is under the GPL 3 License."
     exit 1
+}
+
+[ -f ~/.gistmgrrc ] || genrcfile
+
+if [ $# -eq 0 ] || [ "$1" == "--help" ] || [ "$1" == "-h" ] || [ -z "$1" ]
+then
+    usage
 else
     . ~/.gistmgrrc
     [ -z "$FILE_LOC" ] && echo "$0: No FILE_LOC present, abort!" && exit 2
@@ -50,7 +54,8 @@ else
 	    echo "$0: invalid number of arguments (got $#, need 3)" >&2
 	    echo "$0: Usage: $0 $1 <list> <url>" >&2
 	else
-	    exec $0 --help
+	    echo "$0: command not found" >&2
+	    usage
 	fi
     elif [ "$1" == "add" ]
     then
