@@ -2,7 +2,20 @@
 #
 # Manages URL-based lists that can be uploaded as secret Gists.
 #
-[ -f ~/.gistmgrrc ] || (echo "$0: no gistmgrrc file exists, creating default" 1>&2 && echo "$0: creating local git repo, you'll need to connect it to gist" 1>&2 && mkdir "$HOME/.gistmgr" && cd "$HOME/.gistmgr" && git init && echo "# GistMGR" > gistlist && git add gistlist && git commit -m "[gistmgr] Initial Commit" && cd - >/dev/null && echo "FILE_LOC=$HOME/.gistmgr/gistlist ; FOLDER_LOC=$HOME/.gistmgr" >~/.gistmgrrc && echo "")
+function genrcfile() {
+    # We assume we need to make a .gistmgrrc file, and thus won't
+    # check for it.
+    echo "$0: no gistmgrrc file exists, creating default" 1>&2
+    echo "$0: creating local git repo, you'll need to connect it to gist" 1>&2
+    mkdir "$HOME/.gistmgr" && cd "$HOME/.gistmgr"
+    git init
+    echo "# GistMGR" > gistlist
+    git add gistlist && git commit -m "[gistmgr] Initial Commit"
+    echo "FILE_LOC=$HOME/.gistmgr/gistlist" >>~/.gistmgrrc
+    echo "FOLDER_LOC=$HOME/.gistmgr" >>~/.gistmgrrc
+}
+
+[ -f ~/.gistmgrrc ] || genrcfile
 
 if [ $# -eq 0 ] || [ "$1" == "--help" ] || [ "$1" == "-h" ] || [ -z "$1" ]
 then
