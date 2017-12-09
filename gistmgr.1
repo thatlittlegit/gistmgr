@@ -1,0 +1,111 @@
+.
+.TH "GISTMGR" "1" "December 2017" "GistMGR" "GistMGR Manual"
+.
+.SH "NAME"
+\fBgistmgr\fR \- Manages URLs compatible with Gists
+.
+.SH "SYNOPSIS"
+.\" Clean up
+\fBgistmgr add <\fIlist\fB> <\fIurl\fB> [\fIcomment\fB]
+
+\fBgistmgr remove <\fIlist\fB> <\fIurl\fB>
+
+\fBgistmgr list <\fIlist\fB>
+
+.SH "DESCRIPTION"
+GistMGR is a
+.BR sh (1)
+script that uses
+.BR grep (1)
+and standard
+.BR sh (1)
+in/output redirectors through
+.BR git (1)
+to provide a seamless experience for managing URLs
+inside of a text file denoted in
+.IR ~/.gistmgrrc ,
+by default
+.IR ~/.gistmgr/gistlist .
+It provides three commands to manage files: \fB
+add\fR, \fBremove\fR, and \fBlist\fR.
+
+\fBadd\fR adds a new
+.IR url
+to the list
+.IR list .
+It appends the line to
+.IR gistlist ,
+and runs
+.BR git-commit (1)
+to log the change into the Git repository.
+
+\fBremove\fR removes
+.IR url
+from the list
+.IR list
+with an inverse
+.BR grep (1)
+which removes ALL instances of the URL from
+.IR gistlist ,
+and then runs
+.BR git-commit (1)
+to log the change into the Git repository.
+
+\fBlist\fR lists all the URLs in
+.IR list
+using a
+.BR grep (1)
+command. It is not formatted, see
+.IR BUGS .
+
+.SH "FILES"
+.I ~/.gistmgrrc
+.RS
+The user configuration file for
+.IR gistmgr .
+It is sourced by
+.BR sh (1) ,
+so arbitrary commands can be put in there, as well as
+comments.
+.RE
+.I ~/.gistmgr/gistlist
+.RS
+The default file where URLs are stored. They are
+stored in the file in the following format:
+
+.IR list
+.IR url
+comments...
+.RE
+.SH "EXIT STATUS"
+If all goes well, exit status is 0.
+
+If no arguments are provided or no URLs are found in
+.IR list
+query, exit status is 1.
+
+If an environment variable that is required is not
+set in
+.IR ~/.gistmgrrc ,
+then exit status is 2.
+
+.SH "BUGS"
+There are lots.
+
+PGP encrypting through
+.BR gpg (1)
+is not supported in the slightest.
+
+If no arguments are provided, then it should exit with
+2 or 3, so a runner like
+.BR expect (1)
+can see what went wrong.
+
+The code is a mess.
+
+.SH "AUTHOR"
+thatlittlegit <wapidstyle@live.ca>
+
+.SH "SEE ALSO"
+.BR grep (1),
+.BR git (1)
