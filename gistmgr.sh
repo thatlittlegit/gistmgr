@@ -1,6 +1,13 @@
 #!/bin/sh
 #
-# Manages URL-based lists that can be uploaded as secret Gists.
+# GistMGR manages URL-based lists that are integrated with Git.
+#
+# GistMGR is under the GNU General Public License, 3.0.
+# it is distributed in the hope that it can be useful,
+# but with NO WARRANTY OR LIABILITY.
+#
+# A copy of the license should have been included with
+# this software; if not, see http://gnu.org/licenses/gpl-3.0.txt
 #
 function genrcfile() {
     # We assume we need to make a .gistmgrrc file, and thus won't
