@@ -32,7 +32,13 @@ if [ $# -eq 0 ] || [ "$1" == "--help" ] || [ "$1" == "-h" ] || [ -z "$1" ]
 then
     usage
 else
+    [ -z "$FILE_LOC" ] && RAW_FILELOC=$FILE_LOC
+    [ -z "$FOLDER_LOC" ] && RAW_FOLDERLOC=$FOLDER_LOC
     . ~/.gistmgrrc
+
+    [ -z "$RAW_FILELOC" ] && FILE_LOC=$RAW_FILELOC
+    [ -z "$RAW_FOLDERLOC" ] && FOLDER_LOC=$RAW_FOLDERLOC
+
     [ -z "$FILE_LOC" ] && echo "$0: No FILE_LOC present, abort!" && exit 2
     [ -z "$FOLDER_LOC" ] && echo "$0: No FOLDER_LOC present, abort!" && exit 2
 

@@ -92,12 +92,25 @@ then exit status is 2.
 If there is an invalid number of arguments, then
 exit status is 3.
 
+.SH "ENVIRONMENT"
+.IP FILE_LOC
+.RS
+Where the URLs are stored.
+.RE
+.IP FOLDER_LOC
+.RS
+The folder where FILE_LOC is.
+.RE
+
 .SH "BUGS"
 There are lots.
 
 PGP encrypting through
 .BR gpg (1)
 is not supported in the slightest.
+
+FILE_LOC and FOLDER_LOC's program are ambiguous, and
+FOLDER_LOC shouldn't be needed at all.
 
 The code is a mess.
 
