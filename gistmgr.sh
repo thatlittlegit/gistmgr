@@ -11,8 +11,7 @@ function genrcfile() {
     git init
     echo "# GistMGR" > gistlist
     git add gistlist && git commit -m "[gistmgr] Initial Commit"
-    echo "FILE_LOC=$HOME/.gistmgr/gistlist" >>~/.gistmgrrc
-    echo "FOLDER_LOC=$HOME/.gistmgr" >>~/.gistmgrrc
+    echo "urlfile=$HOME/.gistmgr/gistlist" >>~/.gistmgrrc
 }
 
 function usage() {
@@ -32,16 +31,13 @@ if [ $# -eq 0 ] || [ "$1" == "--help" ] || [ "$1" == "-h" ] || [ -z "$1" ]
 then
     usage
 else
-    [ -z "$FILE_LOC" ] && RAW_FILELOC=$FILE_LOC
-    [ -z "$FOLDER_LOC" ] && RAW_FOLDERLOC=$FOLDER_LOC
     . ~/.gistmgrrc
 
-    [ -z "$RAW_FILELOC" ] && FILE_LOC=$RAW_FILELOC
-    [ -z "$RAW_FOLDERLOC" ] && FOLDER_LOC=$RAW_FOLDERLOC
+    [ -z "$GISTMGR_URLFILE" ] && urlfile=$GISTMGR_URLFILE
 
-    [ -z "$FILE_LOC" ] && echo "$0: No FILE_LOC present, abort!" && exit 2
-    [ -z "$FOLDER_LOC" ] && echo "$0: No FOLDER_LOC present, abort!" && exit 2
+    [ -z "$urlfile" ] && echo "$0: No urlfile present, abort!" && exit 2
 
+    urlfolder=$(dirname $urlfile)
     if [ "$1" == "list" ]
     then
 	if [ $# -ne 2 ]
@@ -51,7 +47,7 @@ else
 	    exit 3
 	fi
 
-	exec grep -e "^$2 " $FILE_LOC
+	exec grep -e "^$2 " $urlfile
     elif [ $# -lt 3 ]
     then
 	if [ $# -gt 1 ]
@@ -64,14 +60,14 @@ else
 	fi
     elif [ "$1" == "add" ]
     then
-	echo "$2 $(echo $3 | sed 's/ /%20/g') $4" >> $FILE_LOC
-	cd $FOLDER_LOC
+	echo "$2 $(echo $3 | sed 's/ /%20/g') $4" >> $urlfile
+	cd $urlfolder
 	exec git commit -avm "[gistmgr] Add $3 to $2" | sed '1q'
     elif [ "$1" == "remove" ]
     then
-	grep -ve "^$2 $(echo $3 | sed 's/ /%20/g').*$" $FILE_LOC >/tmp/gistmgr-$(whoami)
-	mv /tmp/gistmgr-$(whoami) $FILE_LOC
-	cd $FOLDER_LOC
+	grep -ve "^$2 $(echo $3 | sed 's/ /%20/g').*$" $urlfile >/tmp/gistmgr-$(whoami)
+	mv /tmp/gistmgr-$(whoami) $urlfile
+	cd $urlfolder
 	exec git commit -avm "[gistmgr] Remove $3 from $2" 2>&1 | sed '1q'
     fi
 fi

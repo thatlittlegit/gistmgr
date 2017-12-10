@@ -93,24 +93,22 @@ If there is an invalid number of arguments, then
 exit status is 3.
 
 .SH "ENVIRONMENT"
-.IP FILE_LOC
+Note that aliases of these can be set in
+.IR ~/.gistmgrrc .
+In aliases, remove the GISTMGR_ and make it
+lowercase. For example, GISTMGR_URLFILE here
+is urlfile in
+.IR ~/.gistmgrrc .
+
+.IP GISTMGR_URLFILE
 .RS
 Where the URLs are stored.
 .RE
-.IP FOLDER_LOC
-.RS
-The folder where FILE_LOC is.
-.RE
 
 .SH "BUGS"
-There are lots.
-
 PGP encrypting through
 .BR gpg (1)
 is not supported in the slightest.
-
-FILE_LOC and FOLDER_LOC's program are ambiguous, and
-FOLDER_LOC shouldn't be needed at all.
 
 The code is a mess.
 
