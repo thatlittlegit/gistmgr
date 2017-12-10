@@ -40,7 +40,7 @@ then
 else
     . ~/.gistmgrrc
 
-    [ -z "$GISTMGR_URLFILE" ] && urlfile=$GISTMGR_URLFILE
+    [ -z "$GISTMGR_URLFILE" ] || urlfile=$GISTMGR_URLFILE
 
     [ -z "$urlfile" ] && echo "$0: No urlfile present, abort!" && exit 2
 
