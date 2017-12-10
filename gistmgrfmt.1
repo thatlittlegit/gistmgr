@@ -1,0 +1,86 @@
+\"
+\" This manual is under the GNU Free Documentation License 1.3
+\" A copy of the license should be in DOCS-LICENSE, if not see
+\" the second url under the COPYING section.
+\"
+.TH "GISTMGRFMT" "1" "December 2017" "GistMGR" "GistMGR Manual"
+.SH "NAME"
+\fBgistmgrfmt\fR \- Formats URL lists outputted from
+.BR gistmgr (1).
+
+.SH "SYNOPSIS"
+\fBgistmgrfmt <\fIformat\fB>\fR
+
+.SH "DESCRIPTION"
+GistMGR-FMT is a
+.BR sh (1)
+script that uses
+.BR awk (1)
+scripts to format output from the companion
+program
+.BR gistmgr (1).
+Like
+.BR gistmgr (1),
+gistmgrfmt uses
+.IR ~/.gistmgrrc
+for configuration. It has one value in the
+file,
+.IR fmtpath ,
+which is the path that the formatting
+.BR awk (1)
+scripts are located.
+
+By default, two scripts are included:
+.IR html ,
+which outputs to an HTML table which can
+be viewed in
+.BR w3m (1)
+or
+.BR lynx (1),
+and
+.IR table ,
+which outputs to a terminal in a table-like
+format.
+
+.SH "FILES"
+.I ~/.gistmgrrc
+.RS
+The user configuration file for
+.BR gistmgr (1)
+and
+.IR gistmgrfmt .
+.RE
+
+.SH "EXIT STATUS"
+If all goes well, exit status is 0.
+
+If neither fmtpath nor urlfile is defined,
+exit status is 2.
+
+.SH "ENVIRONMENT"
+
+.IP GISTMGR_FORMATS
+.RS
+The location of formats to use. Translates
+to fmtpath in
+.IR ~/.gistmgrrc .
+.RE
+
+.SH "BUGS"
+GISTMGR_FORMATS should be GISTMGR_FMTPATH.
+
+The default formats should be bundled, or
+bundleable, in the script.
+
+The code is a mess.
+
+.SH "COPYING"
+See
+.BR gistmgr (1).
+
+.SH "AUTHOR"
+thatlittlegit <wapidstyle@live.ca>
+
+.SH "SEE ALSO"
+.BR gistmgr (1),
+.BR awk (1)

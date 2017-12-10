@@ -2,10 +2,19 @@
 Manages URLs in a text file using grep
 
 ## Installation
+### GistMGR
 * Copy `gistmgr.sh` into a bin folder like ~/bin or /usr/local/bin.
 * Optionally, copy `gistmgr.1` into your `MANPATH`.
 * `chmod +x (where you put gistmgr.sh)`
 * Run it from the command line.
+
+### GistMGR-FMT
+* Copy `gistmgrfmt.sh` into a bin folder like ~/bin or /usr/local/bin.
+* Copy `formats` into a non-bin folder that you can remember.
+* Optionally, copy `gistmgrfmt.1` into your `MANPATH`.
+* Set `fmtpath` in your .gistmgrrc to where you put `formats`.
+* `chmod +x (where you put gistmgrfmt.sh)`
+* Pipe GistMGR into GistMGR-FMT on the command line.
 
 ## Usage
 By default, GistMGR stores the gistlist in ~/.gistmgr. You can change
