@@ -45,8 +45,7 @@ else
 	    exit 3
 	fi
 
-	grep -e "^$2 " $FILE_LOC
-	exit $?
+	exec grep -e "^$2 " $FILE_LOC
     elif [ $# -lt 3 ]
     then
 	if [ $# -gt 1 ]
@@ -61,12 +60,12 @@ else
     then
 	echo "$2 $(echo $3 | sed 's/ /%20/g') $4" >> $FILE_LOC
 	cd $FOLDER_LOC
-	git commit -avm "[gistmgr] Add $3 to $2" | sed '1q'
+	exec git commit -avm "[gistmgr] Add $3 to $2" | sed '1q'
     elif [ "$1" == "remove" ]
     then
 	grep -ve "^$2 $(echo $3 | sed 's/ /%20/g').*$" $FILE_LOC >/tmp/gistmgr-$(whoami)
 	mv /tmp/gistmgr-$(whoami) $FILE_LOC
 	cd $FOLDER_LOC
-	git commit -avm "[gistmgr] Remove $3 from $2" 2>&1 | sed '1q'
+	exec git commit -avm "[gistmgr] Remove $3 from $2" 2>&1 | sed '1q'
     fi
 fi
