@@ -9,23 +9,27 @@
 # A copy of the license should have been included with
 # this software; if not, see http://gnu.org/licenses/gpl-3.0.txt
 #
+. ~/.gistmgrrc
+
+[ -z "$GISTMGR_FORMATS" ] || fmtpath=$GISTMGR_FORMATS
+[ -z "$GISTMGR_URLFILE" ] || urlfile=$GISTMGR_URLFILE
+
 function usage() {
     echo "GistMGR-FMT - by thatlittlegit
 
-$0 <mode>
+$0 <mode>"
 
+    [ -z "$fmtpath" ] || echo "
 where <mode> can be one of:
-      html
-      table"
+$(ls $fmtpath | grep -ve '.awk$' | awk -F. {'print "'\\t'"$1'})"
+    [ -z "$fmtpath" ] && echo "
+where <mode> can be one of:
+      (unknown)"
 }
 if [ -z "$1" ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]
 then
     usage
 else
-    . ~/.gistmgrrc
-
-    [ -z "$GISTMGR_FORMATS" ] || fmtpath=$GISTMGR_FORMATS
-    [ -z "$GISTMGR_URLFILE" ] || urlfile=$GISTMGR_URLFILE
 
     [ -z "$fmtpath" ] && [ -z "$urlfile" ] && echo "$0: no fmtpath or urlfile in .gistmgrrc, abort!" >&2 && exit 2
     [ -z "$fmtpath" ] && echo "$0: no fmtpath in .gistmgrrc, using directory of $urlfile!" >&2 && fmtpath=$(dirname $urlfile)
