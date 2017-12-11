@@ -60,6 +60,9 @@ and
 .SH "EXIT STATUS"
 If all goes well, exit status is 0.
 
+If the script in question doesn't exist,
+exit status is 1.
+
 If neither fmtpath nor urlfile is defined,
 exit status is 2.
 
@@ -77,9 +80,6 @@ GISTMGR_FORMATS should be GISTMGR_FMTPATH.
 
 The default formats should be bundled, or
 bundleable, in the script.
-
-If the preset doesn't exist, 1 should be
-emitted instead of 2.
 
 The code is a mess.
 
