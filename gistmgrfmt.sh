@@ -34,6 +34,6 @@ else
     [ -z "$fmtpath" ] && [ -z "$urlfile" ] && echo "$0: no fmtpath or urlfile in .gistmgrrc, abort!" >&2 && exit 2
     [ -z "$fmtpath" ] && echo "$0: no fmtpath in .gistmgrrc, using directory of $urlfile!" >&2 && fmtpath=$(dirname $urlfile)
 
-    cat - | awk -f "$fmtpath/$1.awk"
+    exec cat - | awk -f "$fmtpath/$1.awk"
 fi
     
