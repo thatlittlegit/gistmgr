@@ -28,7 +28,13 @@ file,
 .IR fmtpath ,
 which is the path that the formatting
 .BR awk (1)
-scripts are located.
+scripts are located. If
+.IR fmtpath
+is not defined, then the directory name
+from
+.IR urlfile
+is used, and if neither is defined it exits
+with 2.
 
 By default, two scripts are included:
 .IR html ,
@@ -71,6 +77,9 @@ GISTMGR_FORMATS should be GISTMGR_FMTPATH.
 
 The default formats should be bundled, or
 bundleable, in the script.
+
+If the preset doesn't exist, 1 should be
+emitted instead of 2.
 
 The code is a mess.
 
