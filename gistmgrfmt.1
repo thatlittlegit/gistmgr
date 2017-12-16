@@ -67,8 +67,13 @@ If neither fmtpath nor urlfile is defined,
 exit status is 2.
 
 .SH "ENVIRONMENT"
+See
+.BR gistmgr (1)
+for mapping from environment variables to
+variables in
+.IR ~/.gistmgrrc .
 
-.IP GISTMGR_FORMATS
+.IP GISTMGR_FMTPATH
 .RS
 The location of formats to use. Translates
 to fmtpath in
@@ -76,8 +81,6 @@ to fmtpath in
 .RE
 
 .SH "BUGS"
-GISTMGR_FORMATS should be GISTMGR_FMTPATH.
-
 The default formats should be bundled, or
 bundleable, in the script.
 

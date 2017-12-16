@@ -11,7 +11,7 @@
 #
 . ~/.gistmgrrc
 
-[ -z "$GISTMGR_FORMATS" ] || fmtpath=$GISTMGR_FORMATS
+[ -z "$GISTMGR_FMTPATH" ] || fmtpath=$GISTMGR_FMTPATH
 [ -z "$GISTMGR_URLFILE" ] || urlfile=$GISTMGR_URLFILE
 
 usage() {
