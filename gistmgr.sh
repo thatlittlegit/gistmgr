@@ -45,16 +45,25 @@ else
     [ -z "$urlfile" ] && echo "$0: No urlfile present, abort!" && exit 2
 
     urlfolder=$(dirname $urlfile)
+
+    case "#@#" in "$(sed 2q <$urlfile | tail -1)")
+		      singlelist=1
+    esac
+    [ -z "$singlelist" ] && singlelist=0
+
     if [ "$1" = "list" ]
     then
-	if [ $# -ne 2 ]
+	if [ "$singlelist" = "1" ]
+	then
+	    exec grep -ve "^#" $urlfile
+	elif [ $# -ne 2 ]
 	then
 	    echo "$0: invalid number of arguments (got $#, need 2)" >&2
 	    echo "$0: Usage: $0 list <list>" >&2
 	    exit 3
+	else
+	    exec grep -e "^$2 " $urlfile
 	fi
-
-	exec grep -e "^$2 " $urlfile
     elif [ $# -lt 3 ]
     then
 	if [ $# -gt 1 ]
@@ -67,14 +76,38 @@ else
 	fi
     elif [ "$1" = "add" ]
     then
-	echo "$2 $(echo $3 | sed 's/ /%20/g') $4" >> $urlfile
+	if [ "$singlelist" = "1" ]
+	then
+	    echo "$(echo $2 | sed 's/ /%20/g') $3" >> $urlfile
+	else
+	    echo "$2 $(echo $3 | sed 's/ /%20/g') $4" >> $urlfile
+	fi
+
 	cd $urlfolder
-	exec git commit -avm "[gistmgr] Add $3 to $2" | sed '1q'
+
+	if [ "$singlelist" = "1" ]
+	then
+	    exec git commit -avm "[gistmgr] Add $2" | sed '1q'
+	else
+	    exec git commit -avm "[gistmgr] Add $3 to $2" | sed '1q'
+	fi
     elif [ "$1" = "remove" ]
     then
-	grep -ve "^$2 $(echo $3 | sed 's/ /%20/g').*$" $urlfile >/tmp/gistmgr-$(whoami)
+	if [ "$singlelist" = "1" ]
+	then
+	    grep -ve "^$2" $urlfile >/tmp/gistmgr-$(whoami)
+	else
+	    grep -ve "^$2 $(echo $3 | sed 's/ /%20/g').*$" $urlfile >/tmp/gistmgr-$(whoami)
+	fi
+
 	mv /tmp/gistmgr-$(whoami) $urlfile
 	cd $urlfolder
-	exec git commit -avm "[gistmgr] Remove $3 from $2" 2>&1 | sed '1q'
+
+	if [ "$singlelist" = "1" ]
+	then
+	    exec git commit -avm "[gistmgr] Remove $2" 2>&1 | sed 1q
+	else
+	    exec git commit -avm "[gistmgr] Remove $3 from $2" 2>&1 | sed '1q'
+	fi
     fi
 fi
