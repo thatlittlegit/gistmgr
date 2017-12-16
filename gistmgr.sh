@@ -9,7 +9,7 @@
 # A copy of the license should have been included with
 # this software; if not, see http://gnu.org/licenses/gpl-3.0.txt
 #
-function genrcfile() {
+genrcfile() {
     # We assume we need to make a .gistmgrrc file, and thus won't
     # check for it.
     echo "$0: no gistmgrrc file exists, creating default" 1>&2
@@ -21,7 +21,7 @@ function genrcfile() {
     echo "urlfile=$HOME/.gistmgr/gistlist" >>~/.gistmgrrc
 }
 
-function usage() {
+usage() {
        echo "GistMGR - by thatlittlegit
 
 $0 add <list> <url> [comment]
@@ -34,7 +34,7 @@ GistMGR is under the GPL 3 License."
 
 [ -f ~/.gistmgrrc ] || genrcfile
 
-if [ $# -eq 0 ] || [ "$1" == "--help" ] || [ "$1" == "-h" ] || [ -z "$1" ]
+if [ $# -eq 0 ] || [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ -z "$1" ]
 then
     usage
 else
@@ -45,7 +45,7 @@ else
     [ -z "$urlfile" ] && echo "$0: No urlfile present, abort!" && exit 2
 
     urlfolder=$(dirname $urlfile)
-    if [ "$1" == "list" ]
+    if [ "$1" = "list" ]
     then
 	if [ $# -ne 2 ]
 	then
@@ -65,12 +65,12 @@ else
 	    echo "$0: command not found" >&2
 	    usage
 	fi
-    elif [ "$1" == "add" ]
+    elif [ "$1" = "add" ]
     then
 	echo "$2 $(echo $3 | sed 's/ /%20/g') $4" >> $urlfile
 	cd $urlfolder
 	exec git commit -avm "[gistmgr] Add $3 to $2" | sed '1q'
-    elif [ "$1" == "remove" ]
+    elif [ "$1" = "remove" ]
     then
 	grep -ve "^$2 $(echo $3 | sed 's/ /%20/g').*$" $urlfile >/tmp/gistmgr-$(whoami)
 	mv /tmp/gistmgr-$(whoami) $urlfile
