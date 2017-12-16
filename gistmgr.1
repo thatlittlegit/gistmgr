@@ -5,15 +5,14 @@
 \"
 .TH "GISTMGR" "1" "December 2017" "GistMGR" "GistMGR Manual"
 .SH "NAME"
-\fBgistmgr\fR \- Manages URLs compatible with Gists
+\fBgistmgr\fR \- manages URLs compatible with GitHub's Gists
 
 .SH "SYNOPSIS"
-\" Clean up
-\fBgistmgr add <\fIlist\fB> <\fIurl\fB> [\fIcomment\fB]
+gistmgr \fBadd \fIlist url \fR[\fIcomment\fR]
 
-\fBgistmgr remove <\fIlist\fB> <\fIurl\fB>
+gistmgr \fBremove \fIlist url\fR
 
-\fBgistmgr list <\fIlist\fB>
+gistmgr \fBlist \fIlist\fR
 
 .SH "DESCRIPTION"
 GistMGR is a
@@ -30,7 +29,9 @@ inside of a text file denoted in
 by default
 .IR ~/.gistmgr/gistlist .
 It provides three commands to manage files: \fB
-add\fR, \fBremove\fR, and \fBlist\fR.
+.BR add ,
+.BR remove ", and"
+.BR list .
 
 \fBadd\fR adds a new
 .IR url
